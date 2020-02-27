@@ -13,9 +13,10 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   rules: {
-    // '@typescript-eslint/no-useless-constructor': 'error',
-    // '@typescript-eslint/no-require-imports': 'error',
+    '@typescript-eslint/no-useless-constructor': 'error',
+    '@typescript-eslint/no-require-imports': 'error',
     '@typescript-eslint/interface-name-prefix': 'off',
+    'class-methods-use-this': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
