@@ -10,10 +10,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "@ts-ddd/core": "*"
+    "@ts-ddd/core": "*",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.22"
   },
   "devDependencies": {
     "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.6",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "eslint": "^6.8.0",

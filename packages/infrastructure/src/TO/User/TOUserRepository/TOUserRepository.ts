@@ -1,14 +1,40 @@
 import { IUserRepository, User, UserId, UserName } from '@ts-ddd/core';
+import { getConnection, Connection } from 'typeorm';
+import { TOUserEntity } from './TOUserEntity';
 
 export class TOUserRepository implements IUserRepository {
-  save(user: User): void {
-    // eslint-disable-next-line no-console
-    console.log(user);
+  private connection: Connection;
+
+  constructor() {
+    this.connection = getConnection();
   }
 
-  findById(id: UserId): User {
-    // eslint-disable-next-line no-console
-    console.log(id);
-    return new User(new UserId(1), new UserName('hoge'));
+  async findById(id: UserId): Promise<User | null> {
+    const userRepository = this.connection.getRepository(TOUserEntity);
+    const userRow = await userRepository.findOne(id.value);
+    if (!userRow) {
+      return null;
+    }
+    return this.toUser(userRow);
+  }
+
+  async save(user: User): Promise<void> {
+    const data = this.toTOUserEntity(user);
+    const userRepository = this.connection.getRepository(TOUserEntity);
+    await userRepository.save(data);
+  }
+
+  private toUser(from: TOUserEntity): User {
+    if (!from.id) {
+      throw new Error('hoge');
+    }
+    return new User(new UserId(from.id), new UserName(from.name));
+  }
+
+  private toTOUserEntity(from: User): TOUserEntity {
+    if (!from.id) {
+      throw new Error('hoge');
+    }
+    return new TOUserEntity(from.getName().value);
   }
 }
