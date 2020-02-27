@@ -4,5 +4,6 @@
   "description": "typescript ddd sample",
   "author": "hiramatsutaku <hiramatsutaku@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "workspaces": ["packages/*"]
 }
