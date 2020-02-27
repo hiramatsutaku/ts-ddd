@@ -1,7 +1,7 @@
 import { IEquatable } from '../../utils/types';
 
 interface IUserName extends IEquatable<IUserName> {
-  value: string;
+  readonly value: string;
 }
 
 export class UserName implements IUserName {
