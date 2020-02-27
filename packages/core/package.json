@@ -1,5 +1,7 @@
 {
-  "name": "@ts-ddd/domain",
+  "name": "@ts-ddd/core",
+  "description": "domain & application layer",
+  "main": "index.ts",
   "version": "1.0.0",
   "author": "hiramatsutaku <hiramatsutaku@gmail.com>",
   "private": true,
