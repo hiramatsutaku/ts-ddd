@@ -1,3 +1,1 @@
-import { UserName } from './UserName';
-
-export default UserName;
+export { UserName } from './UserName';

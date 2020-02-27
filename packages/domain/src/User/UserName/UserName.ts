@@ -1,4 +1,4 @@
-import { IEquatable } from '../../utils/ValueObject';
+import { IEquatable } from '../../utils/types';
 
 interface IUserName extends IEquatable<IUserName> {
   value: string;
