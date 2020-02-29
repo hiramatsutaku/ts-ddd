@@ -42,7 +42,7 @@ describe('UserApplicationService', () => {
 
   describe('method', () => {
     describe('register', () => {
-      test.skip('success', async () => {
+      test('success', async () => {
         await expect(userApplicationService.register(newId, 'userName')).rejects.toThrow();
       });
 
