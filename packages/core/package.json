@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --ext .js,.ts --cache",
-    "test": "NODE_ENV=test jest --runInBand"
+    "test": "NODE_ENV=test jest --runInBand",
+    "watch:test": "NODE_ENV=test jest --runInBand --watch"
   },
   "dependencies": {
     "@ts-ddd/infrastructure": "*",
