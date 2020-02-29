@@ -20,6 +20,10 @@ describe('UserApplicationService', () => {
     ReturnType<IUserRepository['save']>,
     Parameters<IUserRepository['save']>
   >;
+  let deleteMock: jest.MockInstance<
+    ReturnType<IUserRepository['delete']>,
+    Parameters<IUserRepository['delete']>
+  >;
 
   beforeEach(() => {
     registeredId = uuid.v4();
@@ -32,8 +36,9 @@ describe('UserApplicationService', () => {
       return Promise.resolve(new User(new UserId(registeredId), new UserName(registeredName)));
     });
     saveMock = jest.fn();
+    deleteMock = jest.fn();
     (TOUserRepository as jest.Mock).mockImplementation(() => {
-      return { findById: findByIdMock, save: saveMock };
+      return { findById: findByIdMock, save: saveMock, delete: deleteMock };
     });
     const userRepositoryMock = new TOUserRepository();
     userApplicationService = new UserApplicationService(
@@ -98,10 +103,23 @@ describe('UserApplicationService', () => {
         });
       });
 
-      it('throw error if user exists', async () => {
+      it('throw error if user does not exists', async () => {
         const command = new UserUpdateCommand(uuid.v4(), { name: newName });
         await expect(userApplicationService.update(command)).rejects.toThrow();
         expect(saveMock.mock.calls[0]).toBeUndefined();
+      });
+    });
+
+    describe('delete', () => {
+      test('success', async () => {
+        await userApplicationService.delete(registeredId);
+        expect(deleteMock.mock.calls[0][0] instanceof User).toBe(true);
+        expect(deleteMock.mock.calls[0][0].id.value).toBe(registeredId);
+      });
+
+      it('throw error if user does not exists', async () => {
+        await expect(userApplicationService.delete(uuid.v4())).rejects.toThrow();
+        expect(deleteMock.mock.calls[0]).toBeUndefined();
       });
     });
   });

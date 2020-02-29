@@ -54,4 +54,13 @@ export class UserApplicationService {
     }
     await this.userRepository.save(user);
   }
+
+  async delete(id: string): Promise<void> {
+    const userId = new UserId(id);
+    const user = await this.userRepository.findById(userId);
+    if (!user) {
+      throw new Error('User does not exist.');
+    }
+    await this.userRepository.delete(user);
+  }
 }
