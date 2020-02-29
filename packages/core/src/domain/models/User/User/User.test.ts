@@ -34,15 +34,5 @@ describe('User', () => {
         expect(user1.equal(user2)).toBe(false);
       });
     });
-
-    describe('getName', () => {
-      it('return name', () => {
-        const userId = new UserId(uuid.v4());
-        const userName = new UserName('hoge');
-        const user = new User(userId, userName);
-        expect(user.getName()).toEqual(userName);
-        expect(user.getName().equal(userName)).toBe(true);
-      });
-    });
   });
 });

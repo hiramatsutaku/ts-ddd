@@ -5,13 +5,12 @@ import { UserName } from '../UserName';
 interface IUser extends IEquatable<IUser> {
   readonly id: UserId;
   changeName: (name: UserName) => void;
-  getName: () => UserName;
 }
 
 export class User implements IUser {
   readonly id: UserId;
 
-  private name: UserName;
+  name: UserName;
 
   constructor(id: UserId, name: UserName) {
     this.id = id;
@@ -24,9 +23,5 @@ export class User implements IUser {
 
   changeName(name: UserName): void {
     this.name = name;
-  }
-
-  getName(): User['name'] {
-    return this.name;
   }
 }
