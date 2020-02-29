@@ -3,6 +3,7 @@ import { TOUserRepository } from '@ts-ddd/infrastructure';
 import { UserApplicationService } from './UserApplicationService';
 import { UserService } from '../../../domain/services';
 import { IUserRepository, UserId, User, UserName } from '../../../domain/models/User';
+import { UserUpdateCommand } from '../UserUpdateCommand';
 
 jest.mock('@ts-ddd/infrastructure');
 
@@ -69,6 +70,38 @@ describe('UserApplicationService', () => {
 
       it('return null if user does not exist', async () => {
         await expect(userApplicationService.get(uuid.v4())).resolves.toBeNull();
+      });
+    });
+
+    describe('update', () => {
+      const newName = 'new name';
+      const newMailAddress = 'new@hirataku.dev';
+
+      describe('success', () => {
+        it('update only name', async () => {
+          const command = new UserUpdateCommand(registeredId, { name: newName });
+          await userApplicationService.update(command);
+          expect(saveMock.mock.calls[0][0] instanceof User).toBe(true);
+          expect(saveMock.mock.calls[0][0].name.value).toBe(newName);
+          expect(saveMock.mock.calls[0][0].mailAddress).toBeUndefined();
+        });
+
+        it('update name & mail address', async () => {
+          const command = new UserUpdateCommand(registeredId, {
+            name: newName,
+            mailAddress: newMailAddress,
+          });
+          await userApplicationService.update(command);
+          expect(saveMock.mock.calls[0][0] instanceof User).toBe(true);
+          expect(saveMock.mock.calls[0][0].name.value).toBe(newName);
+          expect(saveMock.mock.calls[0][0].mailAddress?.value).toBe(newMailAddress);
+        });
+      });
+
+      it('throw error if user exists', async () => {
+        const command = new UserUpdateCommand(uuid.v4(), { name: newName });
+        await expect(userApplicationService.update(command)).rejects.toThrow();
+        expect(saveMock.mock.calls[0]).toBeUndefined();
       });
     });
   });

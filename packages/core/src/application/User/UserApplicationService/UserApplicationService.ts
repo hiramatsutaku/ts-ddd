@@ -1,6 +1,13 @@
 import { UserService } from '../../../domain/services';
-import { IUserRepository, User, UserId, UserName } from '../../../domain/models/User';
+import {
+  IUserRepository,
+  User,
+  UserId,
+  UserName,
+  UserMailAddress,
+} from '../../../domain/models/User';
 import { UserData } from '../UserData';
+import { UserUpdateCommand } from '../UserUpdateCommand';
 
 export class UserApplicationService {
   readonly userRepository: IUserRepository;
@@ -29,5 +36,22 @@ export class UserApplicationService {
       return null;
     }
     return new UserData(user);
+  }
+
+  async update(command: UserUpdateCommand): Promise<void> {
+    const userId = new UserId(command.id);
+    const user = await this.userRepository.findById(userId);
+    if (!user) {
+      throw new Error('User does not exist.');
+    }
+    if (command.name) {
+      const newName = new UserName(command.name);
+      user.changeName(newName);
+    }
+    if (command.mailAddress) {
+      const newMailAddress = new UserMailAddress(command.mailAddress);
+      user.changeMailAddress(newMailAddress);
+    }
+    await this.userRepository.save(user);
   }
 }
