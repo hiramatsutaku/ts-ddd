@@ -1,0 +1,1 @@
+export { UserUpdateCommand } from './UserUpdateCommand';
