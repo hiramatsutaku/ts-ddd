@@ -6,7 +6,7 @@ export class TOUserRepository implements IUserRepository {
   private connection: Connection;
 
   constructor() {
-    this.connection = getConnection();
+    this.connection = getConnection(process.env.NODE_ENV);
   }
 
   async findById(id: UserId): Promise<User | null> {
@@ -35,6 +35,6 @@ export class TOUserRepository implements IUserRepository {
     if (!from.id) {
       throw new Error('hoge');
     }
-    return new TOUserEntity(from.getName().value);
+    return new TOUserEntity(from.id.value, from.getName().value);
   }
 }

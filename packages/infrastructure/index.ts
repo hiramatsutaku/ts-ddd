@@ -1,1 +1,1 @@
-import 'reflect-metadata';
+export { TOUserRepository } from './src/TO/TOUserRepository';

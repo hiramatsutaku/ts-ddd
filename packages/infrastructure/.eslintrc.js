@@ -24,6 +24,12 @@ module.exports = {
         ts: 'never',
       },
     ],
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: ['jest.*'],
+      },
+    ],
     'import/prefer-default-export': 'off',
   },
 };

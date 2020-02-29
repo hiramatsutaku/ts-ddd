@@ -1,4 +1,4 @@
-import { IEquatable } from '../../utils/types';
+import { IEquatable } from '../../../utils/types';
 import { UserId } from '../UserId';
 import { UserName } from '../UserName';
 

@@ -1,13 +1,13 @@
-import { IEquatable } from '../../utils/types';
+import { IEquatable } from '../../../utils/types';
 
 interface IUserId extends IEquatable<IUserId> {
-  readonly value: number;
+  readonly value: string;
 }
 
 export class UserId implements IUserId {
-  readonly value: number;
+  readonly value: string;
 
-  constructor(value: number) {
+  constructor(value: string) {
     this.value = value;
   }
 
