@@ -21,4 +21,15 @@ describe('TOUserRepository', () => {
   test('save', async () => {
     await repo.save(entity);
   });
+
+  test('delete', async () => {
+    repo = new TOUserRepository();
+    const name = 'hoge';
+    const userId = new UserId(uuid.v4());
+    const userName = new UserName(name);
+    const user = new User(userId, userName);
+    await repo.save(user);
+    await repo.delete(user);
+    expect(await repo.findById(user.id)).toBeNull();
+  });
 });

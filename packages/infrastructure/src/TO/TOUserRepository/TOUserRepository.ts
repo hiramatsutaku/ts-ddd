@@ -24,6 +24,12 @@ export class TOUserRepository implements IUserRepository {
     await userRepository.save(data);
   }
 
+  async delete(user: User): Promise<void> {
+    const data = this.toTOUserEntity(user);
+    const userRepository = this.connection.getRepository(TOUserEntity);
+    await userRepository.delete(data.id);
+  }
+
   private toUser(from: TOUserEntity): User {
     if (!from.id) {
       throw new Error('hoge');
@@ -35,6 +41,6 @@ export class TOUserRepository implements IUserRepository {
     if (!from.id) {
       throw new Error('hoge');
     }
-    return new TOUserEntity(from.id.value, from.getName().value);
+    return new TOUserEntity(from.id.value, from.name.value);
   }
 }
