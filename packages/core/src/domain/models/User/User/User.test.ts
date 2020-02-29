@@ -2,6 +2,7 @@ import * as uuid from 'uuid';
 import { User } from './User';
 import { UserId } from '../UserId';
 import { UserName } from '../UserName';
+import { UserMailAddress } from '../UserMailAddress';
 
 describe('User', () => {
   test('create instance', () => {
@@ -33,6 +34,25 @@ describe('User', () => {
         const user2 = new User(userId2, userName);
         expect(user1.equal(user2)).toBe(false);
       });
+    });
+    test('changeName', () => {
+      const id = uuid.v4();
+      const userId = new UserId(id);
+      const userName = new UserName('old');
+      const newUserName = new UserName('new');
+      const user = new User(userId, userName);
+      user.changeName(newUserName);
+      expect(user.name).toEqual(newUserName);
+    });
+
+    test('changeMailAddress', () => {
+      const id = uuid.v4();
+      const userId = new UserId(id);
+      const userName = new UserName('hoge');
+      const newUserMailAddress = new UserMailAddress('new@hirataku.dev');
+      const user = new User(userId, userName);
+      user.changeMailAddress(newUserMailAddress);
+      expect(user.mailAddress).toEqual(newUserMailAddress);
     });
   });
 });
